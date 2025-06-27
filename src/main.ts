@@ -62,7 +62,7 @@ function noSearchDefaultPageRender() {
 
   settingsButton.addEventListener('click', () => {
     modalOverlay.style.display = 'flex';
-    defaultBangInput.value = localStorage.getItem('default-bang') ?? FALLBACK_BANG;
+    defaultBangInput.value = LS_DEFAULT_BANG;
   });
 
   cancelButton.addEventListener('click', () => {
