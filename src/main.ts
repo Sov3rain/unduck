@@ -86,13 +86,13 @@ function getBangredirectUrl() {
     return null;
   }
 
-  const LS_DEFAULT_BANG = localStorage.getItem("default-bang") ?? "g";
+  const LS_DEFAULT_BANG = localStorage.getItem("default-bang") ?? "ddg";
   const defaultBang = bangs.get(LS_DEFAULT_BANG);
 
   const match = query.match(/!(\S+)/i);
 
   const bangCandidate = match?.[1]?.toLowerCase();
-  const selectedBang = bangs.get(bangCandidate) ?? defaultBang;
+  const selectedBang = bangCandidate ? bangs.get(bangCandidate) ?? defaultBang : defaultBang;
 
   // Remove the first bang from the query
   const cleanQuery = query.replace(/!\S+\s*/i, "").trim();
