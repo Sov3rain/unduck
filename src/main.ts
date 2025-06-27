@@ -45,11 +45,15 @@ function noSearchDefaultPageRender() {
   const copyButton = app.querySelector<HTMLButtonElement>(".copy-button")!;
   const copyIcon = copyButton.querySelector("img")!;
   const urlInput = app.querySelector<HTMLInputElement>(".url-input")!;
-  const settingsButton = app.querySelector<HTMLButtonElement>(".settings-button")!;
+  const settingsButton = app.querySelector<HTMLButtonElement>(
+    ".settings-button",
+  )!;
   const modalOverlay = app.querySelector<HTMLDivElement>(".modal-overlay")!;
   const cancelButton = app.querySelector<HTMLButtonElement>(".cancel-button")!;
   const saveButton = app.querySelector<HTMLButtonElement>(".save-button")!;
-  const defaultBangInput = app.querySelector<HTMLInputElement>("#default-bang-input")!;
+  const defaultBangInput = app.querySelector<HTMLInputElement>(
+    "#default-bang-input",
+  )!;
 
   copyButton.addEventListener("click", async () => {
     await navigator.clipboard.writeText(urlInput.value);
@@ -71,6 +75,7 @@ function noSearchDefaultPageRender() {
 
   saveButton.addEventListener("click", () => {
     const newDefaultBang = defaultBangInput.value.trim();
+    
     if (newDefaultBang) {
       localStorage.setItem("default-bang", newDefaultBang);
       modalOverlay.style.display = "none";
@@ -78,9 +83,10 @@ function noSearchDefaultPageRender() {
   });
 }
 
-function getBangredirectUrl() {
+function getBangRedirectUrl() {
   const url = new URL(window.location.href);
   const query = url.searchParams.get("q")?.trim() ?? "";
+
   if (!query) {
     noSearchDefaultPageRender();
     return null;
@@ -92,14 +98,17 @@ function getBangredirectUrl() {
   const match = query.match(/!(\S+)/i);
 
   const bangCandidate = match?.[1]?.toLowerCase();
-  const selectedBang = bangCandidate ? bangs.get(bangCandidate) ?? defaultBang : defaultBang;
+  const selectedBang = bangCandidate
+    ? bangs.get(bangCandidate) ?? defaultBang
+    : defaultBang;
 
   // Remove the first bang from the query
   const cleanQuery = query.replace(/!\S+\s*/i, "").trim();
 
   // If the query is just `!gh`, use `github.com` instead of `github.com/search?q=`
-  if (cleanQuery === "")
+  if (cleanQuery === "") {
     return selectedBang ? `https://${selectedBang.d}` : null;
+  }
 
   // Format of the url is:
   // https://www.google.com/search?q={{{s}}}
@@ -108,13 +117,14 @@ function getBangredirectUrl() {
     // Replace %2F with / to fix formats like "!ghr+t3dotgg/unduck"
     encodeURIComponent(cleanQuery).replace(/%2F/g, "/"),
   );
+
   if (!searchUrl) return null;
 
   return searchUrl;
 }
 
 function doRedirect() {
-  const searchUrl = getBangredirectUrl();
+  const searchUrl = getBangRedirectUrl();
   if (!searchUrl) return;
   window.location.replace(searchUrl);
 }
