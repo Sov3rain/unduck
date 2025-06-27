@@ -150,6 +150,95 @@ textarea {
   color: #333;
 }
 
+.settings-button {
+  color: #fff;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-button:hover {
+  background: #f0f0f0;
+}
+
+.settings-button:active {
+  background: #e5e5e5;
+}
+
+.settings-button img {
+  width: 20px;
+  height: 20px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.modal-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.modal-actions button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.modal-actions .cancel-button {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.modal-actions .save-button {
+  background: #28a745;
+  color: #fff;
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     color: #ddd;
@@ -192,5 +281,32 @@ textarea {
 
   .copy-button:active {
     background: #333;
+  }
+  
+  .settings-button:hover {
+    background: #222;
+  }
+
+  .settings-button:active {
+    background: #333;
+  }
+
+  .settings-button img {
+    filter: invert(1);
+  }
+
+  .modal {
+    background: #191919;
+  }
+
+  .modal-content input {
+    border-color: #3d3d3d;
+    background-color: #222;
+    color: #fff;
+  }
+
+  .modal-actions .cancel-button {
+    background: #333;
+    color: #fff;
   }
 }

@@ -27,12 +27,33 @@ function noSearchDefaultPageRender() {
         •
         <a href="https://github.com/t3dotgg/unduck" target="_blank">github</a>
       </footer>
+      <button class="settings-button">
+        <img src="/settings.svg" alt="Settings" />
+      </button>
+      <div class="modal-overlay" style="display: none;">
+        <div class="modal">
+          <h2>Settings</h2>
+          <div class="modal-content">
+            <label for="default-bang-input">Default Bang</label>
+            <input type="text" id="default-bang-input" />
+          </div>
+          <div class="modal-actions">
+            <button class="cancel-button">Cancel</button>
+            <button class="save-button">Save</button>
+          </div>
+        </div>
+      </div>
     </div>
   `;
 
   const copyButton = app.querySelector<HTMLButtonElement>(".copy-button")!;
   const copyIcon = copyButton.querySelector("img")!;
   const urlInput = app.querySelector<HTMLInputElement>(".url-input")!;
+  const settingsButton = app.querySelector<HTMLButtonElement>(".settings-button")!;
+  const modalOverlay = app.querySelector<HTMLDivElement>(".modal-overlay")!;
+  const cancelButton = app.querySelector<HTMLButtonElement>(".cancel-button")!;
+  const saveButton = app.querySelector<HTMLButtonElement>(".save-button")!;
+  const defaultBangInput = app.querySelector<HTMLInputElement>("#default-bang-input")!;
 
   copyButton.addEventListener("click", async () => {
     await navigator.clipboard.writeText(urlInput.value);
@@ -41,6 +62,23 @@ function noSearchDefaultPageRender() {
     setTimeout(() => {
       copyIcon.src = "/clipboard.svg";
     }, 2000);
+  });
+
+  settingsButton.addEventListener("click", () => {
+    modalOverlay.style.display = "flex";
+    defaultBangInput.value = localStorage.getItem("default-bang") ?? "g";
+  });
+
+  cancelButton.addEventListener("click", () => {
+    modalOverlay.style.display = "none";
+  });
+
+  saveButton.addEventListener("click", () => {
+    const newDefaultBang = defaultBangInput.value.trim();
+    if (newDefaultBang) {
+      localStorage.setItem("default-bang", newDefaultBang);
+      modalOverlay.style.display = "none";
+    }
   });
 }
 
