@@ -11,7 +11,7 @@
             readonly 
           />
           <button class="copy-button">
-            <img src="/clipboard.svg" alt="Copy" />
+            <img src="clipboard.svg" alt="Copy" />
           </button>
         </div>
       </div>
