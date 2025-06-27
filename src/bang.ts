@@ -3,6 +3,15 @@
 export const bangs = [
   {
     c: "AI",
+    d: "www.chatgpt.com",
+    r: 0,
+    s: "ChatGPT",
+    sc: "AI",
+    t: "gpt",
+    u: "https://www.chatgpt.com/?temporary-chat=true&q={{{s}}}",
+  },
+  {
+    c: "AI",
     d: "www.t3.chat",
     r: 0,
     s: "T3 Chat",
