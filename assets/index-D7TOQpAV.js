@@ -19,7 +19,7 @@
         <a href="https://github.com/Sov3rain/unduck" target="_blank">github</a>
       </footer>
       <button class="settings-button">
-        <img src="/settings.svg" alt="Settings" />
+        <img src="settings.svg" alt="Settings" />
       </button>
       <div class="modal-overlay" style="display: none;">
         <div class="modal">
