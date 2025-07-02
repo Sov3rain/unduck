@@ -1,8 +1,8 @@
-import { bangs } from "./bang";
-import "./global.css";
+import { bangs } from './bang';
+import './global.css';
 
 function noSearchDefaultPageRender() {
-  const app = document.querySelector<HTMLDivElement>("#app")!;
+  const app = document.querySelector<HTMLDivElement>('#app')!;
   app.innerHTML = `
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
       <div class="content-container">
@@ -42,80 +42,75 @@ function noSearchDefaultPageRender() {
     </div>
   `;
 
-  const copyButton = app.querySelector<HTMLButtonElement>(".copy-button")!;
-  const copyIcon = copyButton.querySelector("img")!;
-  const urlInput = app.querySelector<HTMLInputElement>(".url-input")!;
-  const settingsButton = app.querySelector<HTMLButtonElement>(
-    ".settings-button",
-  )!;
-  const modalOverlay = app.querySelector<HTMLDivElement>(".modal-overlay")!;
-  const cancelButton = app.querySelector<HTMLButtonElement>(".cancel-button")!;
-  const saveButton = app.querySelector<HTMLButtonElement>(".save-button")!;
-  const defaultBangInput = app.querySelector<HTMLInputElement>(
-    "#default-bang-input",
-  )!;
+  const copyButton = app.querySelector<HTMLButtonElement>('.copy-button')!;
+  const copyIcon = copyButton.querySelector('img')!;
+  const urlInput = app.querySelector<HTMLInputElement>('.url-input')!;
+  const settingsButton = app.querySelector<HTMLButtonElement>('.settings-button')!;
+  const modalOverlay = app.querySelector<HTMLDivElement>('.modal-overlay')!;
+  const cancelButton = app.querySelector<HTMLButtonElement>('.cancel-button')!;
+  const saveButton = app.querySelector<HTMLButtonElement>('.save-button')!;
+  const defaultBangInput = app.querySelector<HTMLInputElement>('#default-bang-input')!;
 
-  copyButton.addEventListener("click", async () => {
+  copyButton.addEventListener('click', async () => {
     await navigator.clipboard.writeText(urlInput.value);
-    copyIcon.src = "/clipboard-check.svg";
+    copyIcon.src = '/clipboard-check.svg';
 
     setTimeout(() => {
-      copyIcon.src = "/clipboard.svg";
+      copyIcon.src = '/clipboard.svg';
     }, 2000);
   });
 
-  settingsButton.addEventListener("click", () => {
-    modalOverlay.style.display = "flex";
-    defaultBangInput.value = localStorage.getItem("default-bang") ?? "g";
+  settingsButton.addEventListener('click', () => {
+    modalOverlay.style.display = 'flex';
+    defaultBangInput.value = LS_DEFAULT_BANG;
   });
 
-  cancelButton.addEventListener("click", () => {
-    modalOverlay.style.display = "none";
+  cancelButton.addEventListener('click', () => {
+    modalOverlay.style.display = 'none';
   });
 
-  saveButton.addEventListener("click", () => {
+  saveButton.addEventListener('click', () => {
     const newDefaultBang = defaultBangInput.value.trim();
-    
+
     if (newDefaultBang) {
-      localStorage.setItem("default-bang", newDefaultBang);
-      modalOverlay.style.display = "none";
+      localStorage.setItem('default-bang', newDefaultBang);
+      modalOverlay.style.display = 'none';
     }
   });
 }
 
+const FALLBACK_BANG = 'ddg';
+const LS_DEFAULT_BANG = localStorage.getItem('default-bang') ?? FALLBACK_BANG;
+const defaultBang = bangs.get(LS_DEFAULT_BANG);
+
 function getBangRedirectUrl() {
   const url = new URL(window.location.href);
-  const query = url.searchParams.get("q")?.trim() ?? "";
+  const query = url.searchParams.get('q')?.trim() ?? '';
 
   if (!query) {
     noSearchDefaultPageRender();
     return null;
   }
 
-  const LS_DEFAULT_BANG = localStorage.getItem("default-bang") ?? "ddg";
-  const defaultBang = bangs.get(LS_DEFAULT_BANG);
-
   const match = query.match(/!(\S+)/i);
 
   const bangCandidate = match?.[1]?.toLowerCase();
-  const selectedBang = bangCandidate
-    ? bangs.get(bangCandidate) ?? defaultBang
-    : defaultBang;
+  const selectedBang = bangCandidate ? bangs.get(bangCandidate) ?? defaultBang : defaultBang;
 
   // Remove the first bang from the query
-  const cleanQuery = query.replace(/!\S+\s*/i, "").trim();
+  const cleanQuery = query.replace(/!\S+\s*/i, '').trim();
 
   // If the query is just `!gh`, use `github.com` instead of `github.com/search?q=`
-  if (cleanQuery === "") {
+  if (cleanQuery === '') {
     return selectedBang ? `https://${selectedBang.d}` : null;
   }
 
   // Format of the url is:
   // https://www.google.com/search?q={{{s}}}
   const searchUrl = selectedBang?.u.replace(
-    "{{{s}}}",
+    '{{{s}}}',
     // Replace %2F with / to fix formats like "!ghr+t3dotgg/unduck"
-    encodeURIComponent(cleanQuery).replace(/%2F/g, "/"),
+    encodeURIComponent(cleanQuery).replace(/%2F/g, '/'),
   );
 
   if (!searchUrl) return null;
