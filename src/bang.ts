@@ -24581,11 +24581,6 @@ export const bangs = new Map([
   "s": "GPSies.de",
   "u": "http://gpsies.de/?q={{{s}}}"
 }],
-  ["gpt", {
-  "d": "www.google.pt",
-  "s": "Google PT",
-  "u": "https://www.google.pt/search?q={{{s}}}"
-}],
   ["gpuk", {
   "d": "www.greenpeace.org.uk",
   "s": "Greenpeace UK",
