@@ -9,7 +9,7 @@ export const bangs = new Map([
   ["gpt", {
   "d": "www.chatgpt.com",
   "s": "ChatGPT",
-  "u": "https://www.chatgpt.com/?temporary-chat=true&q={{{s}}}"
+  "u": "https://www.chatgpt.com/?q={{{s}}}"
 }],
   ["t3", {
   "d": "www.t3.chat",
