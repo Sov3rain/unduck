@@ -1,6 +1,11 @@
 // This file was (mostly) ripped from https://duckduckgo.com/bang.js
 
 export const bangs = new Map([
+["mhp", {
+  "d": "myhobby.place",
+  "s": "My Hobby Place",
+  "u": "https://myhobby.place/fr/recherche?s={{{s}}}"
+}],
   ["ppx", {
   "d": "www.perplexity.ai",
   "s": "Perplexity",
