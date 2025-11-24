@@ -11,6 +11,11 @@ export const bangs = new Map([
   "s": "Perplexity",
   "u": "https://www.perplexity.ai/?q={{{s}}}"
 }],
+  ["claude", {
+  "d": "https://claude.ai/",
+  "s": "Claude",
+  "u": "https://claude.ai/new?q={{{s}}}"
+}],
   ["gpt", {
   "d": "www.chatgpt.com",
   "s": "ChatGPT",
